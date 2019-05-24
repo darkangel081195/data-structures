@@ -1,12 +1,14 @@
 #include<iostream>
 using namespace std;
 
+//Binary search Tree
 struct Node{
     int data;
     Node* left;
     Node* right;
 };
 
+//Creating a new node
 Node* new_node(int data){
     Node* ptr = new Node();
     ptr->data = data;
@@ -19,6 +21,7 @@ Node* find_min(Node* root){
     else return(find_min(root->left));
 }
 
+//Inserting new node
 Node* insert(Node* root,int data){
     if(root==NULL) root = new_node(data);
     else if(data <= root->data) root->left = insert(root->left,data);
@@ -26,6 +29,7 @@ Node* insert(Node* root,int data){
     return root;
 }
 
+//Searching a node in tree
 bool search(Node* root,int data){
     if(root==NULL)return false;
     else if(root->data == data)return true;
@@ -33,6 +37,7 @@ bool search(Node* root,int data){
     else return(search(root->right,data));
 }
 
+//Deleting a node
 Node* delete_node(Node* root,int data){
     if(root == NULL) return root;
     else if(data < root->data) root->left = delete_node(root->left,data);
@@ -64,6 +69,7 @@ Node* delete_node(Node* root,int data){
     return root;
 }
 
+//Printing contents of tree in order
 void inorder(Node* root){
     if(root==NULL){
         cout<<'\n';
