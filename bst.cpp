@@ -1,4 +1,5 @@
 #include<iostream>
+#include<queue>
 using namespace std;
 
 //Binary search Tree
@@ -69,16 +70,28 @@ Node* delete_node(Node* root,int data){
     return root;
 }
 
-//Printing contents of tree in order
-void inorder(Node* root){
-    if(root==NULL){
-        cout<<'\n';
-        return;
+//Breadth first traversal of the tree
+void bfs(Node* root){
+    if(root == NULL)return;
+    queue<Node*> Q;
+    Q.push(root);
+    while(!Q.empty()){
+        Node* current = Q.front();
+        cout<<current->data<<' ';
+        if(current->left != NULL)Q.push(current->left);
+        if(current->right != NULL)Q.push(current->right);
+        Q.pop();
         }
+}
 
-    inorder(root->left);
-    cout<<root->data<<' ';
-    inorder(root->right);
+//Printing contents of tree in Depth first traversal
+//For Preorder and post order traversal change the order to DLR and LRD respectively
+void inorder(Node* root){
+    if(root==NULL)return;
+
+    inorder(root->left);//L
+    cout<<root->data<<' ';//D
+    inorder(root->right);//R
 }
 
 int main(){
@@ -91,6 +104,8 @@ int main(){
     root = insert(root,8);
     root = insert(root,12);
     inorder(root);
+    cout<<'\n';
+    bfs(root);
     cout<<"Enter the number to be found"<<'\n';
     int n;
     cin>>n;
