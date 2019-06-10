@@ -32,7 +32,7 @@ def query(node,start,end):
     if(r<start or l> end):
         return 0
 
-    if (l==start and r==end):
+    if (l<=start and end<=r):
         return(tree[node])
     
     mid = (start+end)//2
