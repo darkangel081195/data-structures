@@ -70,7 +70,7 @@ class Graph:
         adjacent = self.out if outgoing else self.inc
         return(len(adjacent[v]))
     
-    #Returns incident edges pointing to v
+    #Returns incident edges going from v
     def incident_edges(self,v,outgoing = True):
         # If graph is directed the optional parameter should be passed
         adjacent = self.out if outgoing else self.inc
