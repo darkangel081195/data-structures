@@ -12,7 +12,7 @@ class Graph:
 
     # -------------------Nested Edge class--------------------
     class Edge:
-        __slots__ = 'origin','destination','weight'
+        __slots__ = 'origin','dest','weight'
         #Constructor to initialize the edge
         def __init__(self,origin,dest,value):
             self.origin = origin
@@ -86,12 +86,15 @@ class Graph:
         return vertex
     
     #Creates a new edge between u and v
-    def insert_edge(self,u,v,weight=None):
+    def insert_edge(self,u,v,weight=1):
         e = self.Edge(u,v,weight)
         self.out[u][v] = e
         self.inc[v][u] = e
+#----------------------End of Graph Implementation---------------------------------
 
-#Depth first search of the graph
+#-----------------Graph Traversal--------------------------------------------
+
+#Depth first search of the graph. Add u to the discovered map before calling the function
 def dfs(g,u,discovered):
     #g----->Graph object
     #u------>Starting vertex
@@ -100,9 +103,39 @@ def dfs(g,u,discovered):
         v = e.opposite(u)
         if v not in discovered:
             discovered[v] = e
-            dfs(g,u,discovered) 
-    
+            dfs(g,u,discovered)
 
-          
-    
+#Once DFS is done we can reconstruct a path from u to v
+def construct_path(u,v,discovered):
+    # discovered ----> the map containing all visited vertex 
+    #                  along with edge obtained through DFS 
+
+    path = []
+    if v in discovered:
+        path.append(v)
+        walk = v
+        while(walk is not u):
+            e = discovered[v]
+            parent = e.opposite(v)
+            path.append(parent)
+            walk = parent
+        path.reverse()
+    return path
+
+# Breadth first traversal of graph using queue
+from collections import deque
+def bfs(g,s,discovered):
+    #s----> Starting vertex
+    queue = deque()
+    discovered={}
+    discovered[s]=None
+    queue.append(s)
+    while(len(queue)>0):
+        u = queue[0]
+        queue.pop()
+        for e in g.incident_edges(u):
+           v = e.opposite(u)
+           if v not in discovered:
+               discovered[v] = e
+               queue.append(v) 
 
